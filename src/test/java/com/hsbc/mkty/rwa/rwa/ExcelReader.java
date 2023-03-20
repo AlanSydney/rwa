@@ -1,12 +1,10 @@
 package com.hsbc.mkty.rwa.rwa;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +23,7 @@ public class ExcelReader {
 //        Workbook workbook = new XSSFWorkbook(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> iterator = sheet.iterator();
-        List<DealData> dealDataList = new ArrayList<>();
+        List<ColumnInfo> columnInfoList = new ArrayList<>();
         List<String> headers = new ArrayList<>();
 
         // Get headers from first row
@@ -38,25 +36,25 @@ public class ExcelReader {
         // Iterate through each row and save data to POJO
         while (iterator.hasNext()) {
             Row currentRow = iterator.next();
-            DealData dealData = new DealData();
+            ColumnInfo columnInfo = new ColumnInfo();
             for (int i = 0; i < headers.size(); i++) {
                 Cell currentCell = currentRow.getCell(i);
                 switch (headers.get(i)) {
                     case "Deal Number":
-                        dealData.setDealNumber(currentCell.getStringCellValue());
+                        columnInfo.setDealNumber(currentCell.getStringCellValue());
                         break;
                     case "Group Member":
-                        dealData.setGroupMember(currentCell.getStringCellValue());
+                        columnInfo.setGroupMember(currentCell.getStringCellValue());
                         break;
                     case "Branch Number":
-                        dealData.setBranchNumber(currentCell.getStringCellValue());
+                        columnInfo.setBranchNumber(currentCell.getStringCellValue());
                         break;
                     case "Profit Centre":
-                        dealData.setProfitCentre(currentCell.getStringCellValue());
+                        columnInfo.setProfitCentre(currentCell.getStringCellValue());
                         break;
                 }
             }
-            dealDataList.add(dealData);
+            columnInfoList.add(columnInfo);
         }
         workbook.close();
         inputStream.close();
@@ -64,7 +62,7 @@ public class ExcelReader {
 }
 
 // POJO class to hold Excel data
-class DealData {
+class ColumnInfo {
     private String dealNumber;
     private String groupMember;
     private String branchNumber;

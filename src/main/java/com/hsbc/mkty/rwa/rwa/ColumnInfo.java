@@ -3,7 +3,7 @@ package com.hsbc.mkty.rwa.rwa;
 import lombok.Data;
 
 @Data
-public class DealData {
+public class ColumnInfo {
     private String index;
     private String excelIndex;
     private String header;

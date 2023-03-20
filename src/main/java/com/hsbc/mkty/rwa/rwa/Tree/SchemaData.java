@@ -6,13 +6,14 @@ import lombok.Data;
 
 @Data
 public class SchemaData {
-    private Node[] nodes;
-    private Edge[] edges;
+    private NodeSchema[] nodeSchemas;
+    private EdgeSchema[] edgeSchemas;
 }
 
 @Data
 @AllArgsConstructor
-class Node {
+@Builder
+class NodeSchema {
     private String nodeType;
     private String nodeTypeKeyFromProperties;
     private Properties properties;
@@ -20,7 +21,8 @@ class Node {
 
 @Data
 @AllArgsConstructor
-class Edge {
+@Builder
+class EdgeSchema {
     private String edgeType;
     private String edgeTypeKeyFromProperties;
     private String sourceNodeType;
