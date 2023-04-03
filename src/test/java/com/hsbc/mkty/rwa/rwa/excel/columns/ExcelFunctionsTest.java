@@ -140,6 +140,7 @@ public class ExcelFunctionsTest {
         double v1 =(1 - Math.exp(-50 * cb2))/(1 - Math.exp(-50)); // ok
         double v2 = 1 - v1; // ok
 
+        // !!!!!!! INCORRECT FORMULA
         // (0.12*v1+0.24*(1-v1))
         double v3 = (0.12*v1+0.24*(1-v1));  //ok
 
@@ -153,7 +154,7 @@ public class ExcelFunctionsTest {
     }
 
 
-    // !!!! big diffs in here 0.00xx
+    // !!!! big diffs in here 0.00xx --- Fix
     @ParameterizedTest
     @Description("testNORMSINV: Excel's NORMSINV compare with Java:  = (DG2*(0.12*(1-EXP(-50*CB2))/(1-EXP(-50))+0.24*(1-(1-EXP(-50*CB2))/(1-EXP(-50))))/partOne)^0.5")
     @CsvSource({
@@ -174,8 +175,8 @@ public class ExcelFunctionsTest {
     void testPartTwo_POW(Double dg2, Double cb2, Double partOne, Double expectedOutput) {
         double v1 = Math.pow((dg2 * (0.12*
                         (1 - Math.exp(-50 * cb2))/(1 - Math.exp(-50))
-                        +0.24*(1 - (1 - Math.exp(-50 * cb2)/(1 - Math.exp(-50))))/ partOne
-                ))
+                        +0.24*(1 - (1 - Math.exp(-50 * cb2))/(1 - Math.exp(-50))))/ partOne
+                )
                 , 0.5);
 
         System.out.println(expectedOutput + " - Excel result");
@@ -227,14 +228,13 @@ public class ExcelFunctionsTest {
         double normSDistAAAAA = cjRWA2.getPartOne(cb2, dg2);
         System.out.println("Test accuracy ===========> ");
         System.out.println(expectedOutput + "   |expectedOutput");
-        System.out.println(normSDistAAAAA + "   |my result");
+        System.out.println(normSDistAAAAA + "   |Java Result");
     }
 
     @ParameterizedTest
     @Description("Formula - CJ: part2")
     @CsvSource({
 //cb2,dg2, ci2, partOne, excel result
-            "0.0007, 1.25,0.054, 0.70516, 0.00187643194746",
             "0.0007, 1.25,0.054, 0.70515918756137, 0.00187643194746",
             "0.0009, 1.3,0.061, 0.69486439283404, 0.00268237705290",
 
@@ -247,7 +247,7 @@ public class ExcelFunctionsTest {
         double partTwo = cjRWA2.getPartTwo(ci2, cb2, dg2, partOne);
         System.out.println("Test accuracy ===========> ");
         System.out.println(expectedOutput + "   |expectedOutput");
-        System.out.println(partTwo + "   |my result");
+        System.out.println(partTwo + "   |Java Result");
     }
     @ParameterizedTest
     @Description("Formula - CJ: part3")
@@ -260,6 +260,6 @@ public class ExcelFunctionsTest {
         double myResult = cjRWA2.getPartThree(cb2, bu2, partTwo);
         System.out.println("Test accuracy ===========> ");
         System.out.println(expectedOutput + "   |expectedOutput");
-        System.out.println(myResult + "   |my result");
+        System.out.println(myResult + "   |Java Result");
     }
 }

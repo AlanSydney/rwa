@@ -72,8 +72,7 @@ public class cjRWA2 {
                 normal.cumulativeProbability(Math.pow(partOne, -0.5)* normalDis.inverseCumulativeProbability(cb2) +
                                 Math.pow((dg2 * (0.12*
                                         (1 - Math.exp(-50 * cb2))/(1 - Math.exp(-50))
-                                        +0.24*(1 - (1-Math.exp(-50* cb2)/(1-Math.exp(-50))))/ partOne
-                                ))
+                                        +0.24*(1 - (1-Math.exp(-50* cb2))/(1-Math.exp(-50))))/ partOne)
                                         , 0.5)
                                 * normalDis.inverseCumulativeProbability(0.999))
                 - cb2 * ci2);
